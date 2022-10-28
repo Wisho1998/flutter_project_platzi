@@ -36,7 +36,7 @@ class DescriptionPlace extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(
-            top: 320,
+            top: 20,
             left: 20,
             right: 20,
           ),
@@ -51,11 +51,15 @@ class DescriptionPlace extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        starsWidget(stars),
+        Container(
+          margin: const EdgeInsets.only(top: 20),
+          child: Stars(stars: stars, sizeIcon: 18),
+        ),
       ],
     );
 
     final allContent = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [titleStars, description],
     );
 

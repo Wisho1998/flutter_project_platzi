@@ -2,52 +2,61 @@ import 'package:flutter/material.dart';
 
 class Star extends StatelessWidget {
   final IconData icon;
+  final double size;
 
   const Star({
     super.key,
     required this.icon,
+    required this.size,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-        top: 322,
-        right: 3,
-      ),
-      child: Icon(
-        icon,
-        color: Colors.amber,
-        size: 18,
-      ),
+    return Icon(
+      icon,
+      color: Colors.amber,
+      size: size,
     );
   }
 }
 
-Row starsWidget(double stars) {
-  List<Widget> starWidgets = [];
+class Stars extends StatelessWidget {
+  final double stars;
+  final double sizeIcon;
 
-  const limitLenStars = 5;
-  double decimal = stars - stars.truncate();
-  int integer = stars.truncate();
+  const Stars({
+    super.key,
+    required this.stars,
+    required this.sizeIcon,
+  });
 
-  const starFilled = Star(icon: Icons.star);
-  const starHalf = Star(icon: Icons.star_half);
-  const starBorder = Star(icon: Icons.star_border);
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> starWidgets = [];
 
-  List<Widget> fillerStars = List.filled(integer, starFilled);
-  starWidgets.addAll(fillerStars);
+    const limitLenStars = 5;
+    double decimal = stars - stars.truncate();
+    int integer = stars.truncate();
 
-  if (decimal >= 0.5) {
-    starWidgets.add(starHalf);
+    var starFilled = Star(icon: Icons.star, size: sizeIcon);
+    var starHalf = Star(icon: Icons.star_half, size: sizeIcon);
+    var starBorder = Star(icon: Icons.star_border, size: sizeIcon);
+
+    List<Widget> fillerStars = List.filled(integer, starFilled);
+    starWidgets.addAll(fillerStars);
+
+    if (decimal >= 0.5) {
+      starWidgets.add(starHalf);
+    }
+
+    int remaining = limitLenStars - starWidgets.length;
+    List<Widget> borderStars = List.filled(remaining, starBorder);
+
+    starWidgets.addAll(borderStars);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: starWidgets,
+    );
   }
-
-  int remaining = limitLenStars - starWidgets.length;
-  List<Widget> borderStars = List.filled(remaining, starBorder);
-
-  starWidgets.addAll(borderStars);
-
-  return Row(
-    children: starWidgets,
-  );
 }
